@@ -4,14 +4,19 @@ import fbchat
 class FBData():
 	client = None
 	ready = False
+	needed_reconnect = False
 
 	@staticmethod
 	def connect():
+		needed_reconnect = False
+		
 		if FBData.ready == False:
 			print("Connecting to facebook...")
-			FBData.client = fbchat.Client("jackdaxterpl@gmail.com", "MadeInJack")
-#			FBData.client = fbchat.Client("pielaclau@gmail.com", "1outazimut")
+#			FBData.client = fbchat.Client("jackdaxterpl@gmail.com", "MadeInJack")
+			FBData.client = fbchat.Client("pielaclau@gmail.com", "1outazimut")
 			FBData.ready = True
+
+			needed_reconnect = False
 		else:
 			print "Facebook connection is on."
 
@@ -49,8 +54,7 @@ class FBParser():
 		# # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 	def getThreadsSummary(self, start = 0, end = 20):
-		#return self.getThreads(True, (start, end), (0, 0))
-		return self.getThreads(True, (start, 5), (0, 0))
+		return self.getThreads(True, (start, end), (0, 0))
 
 	def getThreadMessages(self, threadindex, messagestart = 0, messageend = 20):
 		return self.getThreads(True, (threadindex, threadindex), (messagestart, messageend))

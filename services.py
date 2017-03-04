@@ -28,11 +28,12 @@ class Services():
 		data = json.dumps(response, indent = 4, sort_keys = True)
 		return data
 
-	def getChat(self, messageindex):
+	def getChat(self, messageindex, nummessages = 20):
+		print "Getting chat with {} messages".format(nummessages)
 		response = {}
 
 		fb_parser = FBParser(debug = True)
-		messages = fb_parser.getThreadMessages(messageindex)[0]
+		messages = fb_parser.getThreadMessages(messageindex, messageend = nummessages)[0]
 
 		response["info"] = {
 			"nummessages": len(messages[1]),
@@ -61,5 +62,10 @@ class Services():
 			response["thread"]["messages"][i]["body"] = messages[1][i][2]
 			response["thread"]["messages"][i]["authorid"] = messages[1][i][1]
 
+			for j in range(0, len(messages[0][4])):
+				print str(messages[1][i][1]) + " " + str(messages[0][4][j][0])
+				if messages[1][i][1] == messages[0][4][j][0]: #search for the participant with this ID
+					response["thread"]["messages"][i]["name"] = messages[0][4][j][1]
+					response["thread"]["messages"][i]["type"] = messages[0][4][j][2]
 		data = json.dumps(response, indent = 4, sort_keys = True)
 		return data
