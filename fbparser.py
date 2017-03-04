@@ -1,5 +1,6 @@
 #NEW VERSION
 import fbchat
+from config_reader import ConfigReader
 
 class FBData():
 	client = None
@@ -12,8 +13,9 @@ class FBData():
 		
 		if FBData.ready == False:
 			print("Connecting to facebook...")
+			email, password = ConfigReader().getFacebookCredentials()
 #			FBData.client = fbchat.Client("jackdaxterpl@gmail.com", "MadeInJack")
-			FBData.client = fbchat.Client("pielaclau@gmail.com", "1outazimut")
+			FBData.client = fbchat.Client(email, password)
 			FBData.ready = True
 
 			needed_reconnect = False
